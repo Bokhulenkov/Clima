@@ -1,5 +1,5 @@
 //
-//  WheatherData.swift
+//  WeatherData.swift
 //  Clima
 //
 //  Created by Alexander Bokhulenkov on 19.06.2024.
@@ -8,10 +8,10 @@
 
 import Foundation
 
-struct WheatherData: Decodable {
+struct WeatherData: Decodable {
     let name: String
     let main: Main
-    let weather: Weather
+    let weather: [Weather]
 }
 
 struct Main: Decodable {
@@ -22,5 +22,8 @@ struct Main: Decodable {
 }
 
 struct Weather: Decodable {
+    let id: Int
+    let main: String
     let description: String
+    let icon: String
 }
