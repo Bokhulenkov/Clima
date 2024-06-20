@@ -17,24 +17,24 @@ class WeatherViewController: UIViewController {
     @IBOutlet weak var cityLabel: UILabel!
     @IBOutlet weak var searchTextField: UITextField!
     
-    let weatherManager = WeatherManager()
+    var weatherManager = WeatherManager()
     
+//    MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
         searchTextField.delegate = self
-        
+        weatherManager.delegate = self
     }
 
     @IBAction func searchPressed(_ sender: UIButton) {
         searchTextField.endEditing(true)
     }
-    
-
 }
 
+// MARK: - Extensions
+
 extension WeatherViewController: UITextFieldDelegate {
-    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
 //        скрываем клавиатуру
         searchTextField.endEditing(true)
@@ -54,5 +54,19 @@ extension WeatherViewController: UITextFieldDelegate {
             weatherManager.fetchWeather(cityName: city)
         }
         searchTextField.text = ""
+    }
+}
+
+extension WeatherViewController: WeatherManagerDelegate {
+    func didFailWithError(error: Error) {
+        print("We have \(error)")
+    }
+    
+    func didUpdateWheather(_ weatherManager: WeatherManager, weather: WeatherModel) {
+        DispatchQueue.main.async {
+            self.temperatureLabel.text = weather.temperatureString
+            self.cityLabel.text = weather.cityName
+            self.conditionImageView.image = UIImage(systemName: weather.conditionName)
+        }
     }
 }

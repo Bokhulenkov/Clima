@@ -21,11 +21,11 @@ struct WeatherModel {
         switch conditionId {
         case 200...231: return "bolt"
         case 300...321: return "cloud.drizzle"
-        case 500...531: return "cloud.raipn"
+        case 500...531: return "cloud.rain"
         case 600...622: return "Snow"
         case 701...781: return "tornado"
         case 800: return "sun.max"
-        case 801...804: return "cloud.snow"
+        case 801...804: return "cloud.sun"
         default: return "cloud"
         }
         
